@@ -1,0 +1,64 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+library(chess)
+library(stockfish)
+
+# List of PGN file names
+pgn_files <- c("game1.pgn", "game2.pgn", "game3.pgn", "game4.pgn", "game5.pgn")
+
+# Initialize an empty data frame to store game information
+game_data <- data.frame()
+
+# Loop through each PGN file
+for (pgn_file in pgn_files) {
+  # Read the game from the PGN file
+  game <- read_game(pgn_file)
+  
+  # Extract game information
+  event <- game$event
+  site <- game$site
+  date <- game$date
+  round <- game$round
+  result <- game$result
+  white <- game$white
+  black <- game$black
+  white_elo <- game$white_elo
+  black_elo <- game$black_elo
+  time_control <- game$time_control
+  termination <- game$termination
+  
+  # Extract the moves
+  moves <- game$ply
+  
+  # Create a data frame for the current game
+  game_info <- data.frame(
+    Event = event,
+    Site = site,
+    Date = date,
+    Round = round,
+    Result = result,
+    White = white,
+    Black = black,
+    WhiteElo = white_elo,
+    BlackElo = black_elo,
+    TimeControl = time_control,
+    Termination = termination,
+    Moves = moves
+  )
+  
+  # Append the game information to the main data frame
+  game_data <- rbind(game_data, game_info)
+}
+
+# Print or use the game_data data frame as needed
+print(game_data)
+
+```
+
+A
